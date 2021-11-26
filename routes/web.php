@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\DashboardController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
-use App\Models\Post;
-
-
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,37 +20,39 @@ use App\Models\Post;
 */
 
 Route::get('/', function () {
-    return view('home' ,[
-        "title" => "Home"
+    return view('home', [
+        "title" => "Home",
+        "active" => "home"
     ]);
 });
 
 Route::get('/about', function () {
     return view('about', [
-        "title" => "About" ,
-        "name" =>"Mohamad Fahri Muzakki", 
-        "email"=>"fahrimuzakki28@gmail.com" ,
-        "image" => "1.jpeg"
+        "title" => "About",
+        "name" => "Mohamad Fahri Muzakki",
+        "email" => "fahrimuzakki28@gmail.com",
+        "image" => "1.jpg",
+        "active" => "about"
     ]);
 });
 
-Route::get('/blog', [PostController::class, 'index']);
-// halaman single post
-Route :: get('posts/{post:slug}', [PostController::class, 'show']);
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/{post:slug}', [PostController::class, 'show']);
 
-Route::get('/categories',function(){
-    return view('categories',[
+Route::get('/categories', function(){
+    return view('categories', [
         'title' => 'Post Categories',
+        'active' => 'categories',
         'categories' => Category::all()
     ]);
-}); 
-
-
-
-Route::get('/categoires/{category:slug}', function(Category $category){
-    return view('categoy', [
-    'title'=> $category->name,
-    'posts' => $category->posts,
-    'category' => $category->name
-    ]);
 });
+
+
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
+
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+Route::post('/register', [RegisterController::class, 'store']);
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
