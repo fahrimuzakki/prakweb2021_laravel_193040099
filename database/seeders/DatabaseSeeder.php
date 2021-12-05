@@ -18,15 +18,15 @@ class DatabaseSeeder extends Seeder
     {
         
 
-        // User::create([
-        //     'name' =>'Mohamad Fahri Muzakki',
-        //     'email' => 'fahrimuzakki28@gmail.com',
-        //     'password' => bcrypt('12345')
-        // ]);
+        User::create([
+            'name' =>'Mohamad Fahri Muzakki',
+            'email' => 'fahrimuzakki28@gmail.com',
+            'password' => bcrypt('12345')
+        ]);
 
         // User::create([
-        //     'name' =>' Fahri Muzakki',
-        //     'email' => 'fahrimuzakki48@gmail.com',
+        //     'name' =>' Mohamad Fahri Muzakki',
+        //     'email' => 'fahrimuzakki28@gmail.com',
         //     'password' => bcrypt('12345')
         // ]);
         
